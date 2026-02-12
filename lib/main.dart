@@ -1,7 +1,9 @@
+import 'package:flame/game.dart';
+import 'package:flamegame/src/Sprites/imageRender.dart';
+// import 'package:flamegame/src/redbox/myfirstgame.dart';
+// import 'package:flamegame/src/tapBox/tapBox.dart';
 import 'package:flutter/material.dart';
 
-import 'src/widgets/game_app.dart';
-
 void main() {
-  runApp(const GameApp());
+  runApp(GameWidget(game: Imagerender()));
 }

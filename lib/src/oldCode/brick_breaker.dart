@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:math' as math;
 
 import 'package:flame/components.dart';
-import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flame/input.dart';
 import 'package:flutter/material.dart';
@@ -16,14 +15,14 @@ enum PlayState { welcome, playing, gameOver, won }
 class BrickBreaker extends FlameGame
     with HasCollisionDetection, KeyboardEvents, TapDetector {
   BrickBreaker()
-      : super(
-    camera: CameraComponent.withFixedResolution(
-      width: gameWidth,
-      height: gameHeight,
-    ),
-  );
+    : super(
+        camera: CameraComponent.withFixedResolution(
+          width: gameWidth,
+          height: gameHeight,
+        ),
+      );
 
-  final ValueNotifier<int> score = ValueNotifier(0);            // Add this line
+  final ValueNotifier<int> score = ValueNotifier(0); // Add this line
   final rand = math.Random();
   double get width => size.x;
   double get height => size.y;
@@ -63,7 +62,7 @@ class BrickBreaker extends FlameGame
     world.removeAll(world.children.query<Brick>());
 
     playState = PlayState.playing;
-    score.value = 0;                                            // Add this line
+    score.value = 0; // Add this line
 
     world.add(
       Ball(
@@ -106,9 +105,9 @@ class BrickBreaker extends FlameGame
 
   @override
   KeyEventResult onKeyEvent(
-      KeyEvent event,
-      Set<LogicalKeyboardKey> keysPressed,
-      ) {
+    KeyEvent event,
+    Set<LogicalKeyboardKey> keysPressed,
+  ) {
     super.onKeyEvent(event, keysPressed);
     switch (event.logicalKey) {
       case LogicalKeyboardKey.arrowLeft:

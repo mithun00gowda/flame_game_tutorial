@@ -16,13 +16,13 @@ class Ball extends CircleComponent
     required double radius,
     required this.difficultyModifier,
   }) : super(
-    radius: radius,
-    anchor: Anchor.center,
-    paint: Paint()
-      ..color = const Color(0xff1e6091)
-      ..style = PaintingStyle.fill,
-    children: [CircleHitbox()],
-  );
+         radius: radius,
+         anchor: Anchor.center,
+         paint: Paint()
+           ..color = const Color(0xff1e6091)
+           ..style = PaintingStyle.fill,
+         children: [CircleHitbox()],
+       );
 
   final Vector2 velocity;
   final double difficultyModifier;
@@ -35,9 +35,9 @@ class Ball extends CircleComponent
 
   @override
   void onCollisionStart(
-      Set<Vector2> intersectionPoints,
-      PositionComponent other,
-      ) {
+    Set<Vector2> intersectionPoints,
+    PositionComponent other,
+  ) {
     super.onCollisionStart(intersectionPoints, other);
     if (other is PlayArea) {
       if (intersectionPoints.first.y <= 0) {
@@ -50,17 +50,18 @@ class Ball extends CircleComponent
         add(
           RemoveEffect(
             delay: 0.35,
-            onComplete: () {                                    // Modify from here
+            onComplete: () {
+              // Modify from here
               game.playState = PlayState.gameOver;
             },
           ),
-        );                                                      // To here.
+        ); // To here.
       }
     } else if (other is Bat) {
       velocity.y = -velocity.y;
       velocity.x =
           velocity.x +
-              (position.x - other.position.x) / other.size.x * game.width * 0.3;
+          (position.x - other.position.x) / other.size.x * game.width * 0.3;
     } else if (other is Brick) {
       if (position.y < other.position.y - other.size.y / 2) {
         velocity.y = -velocity.y;
