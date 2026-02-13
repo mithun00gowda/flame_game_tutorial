@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flame/components.dart';
 import 'package:flame/game.dart';
+import 'package:flutter/material.dart';
 
 class Imagerender extends FlameGame {
   @override
@@ -33,7 +34,8 @@ class SpriteBackground extends SpriteComponent with HasGameRef {
   @override
   FutureOr<void> onLoad() async {
     sprite = await gameRef.loadSprite('background.jpg');
-    size = Vector2(500, 500);
+
+    size = Vector2(1000, 1000);
     position = Vector2(0, 0);
     anchor = Anchor.topLeft;
   }
