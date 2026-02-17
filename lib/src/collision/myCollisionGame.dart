@@ -11,15 +11,34 @@ void main() {
 
 class MyCollisionGame extends FlameGame with HasCollisionDetection {
   // GLOBAL VARIABLE: We keep the score here so the whole game can see it
+  late TextComponent scoreText;
   int score = 0;
 
   @override
   Future<void> onLoad() async {
     // Add the coin
+    scoreText = TextComponent(
+      text: 'Score: 0',
+      position: Vector2(20, 50),
+      textRenderer: TextPaint(
+        style: const TextStyle(
+          color: Colors.white,
+          fontSize: 24,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    );
+
+    add(scoreText);
     add(Coin(position: Vector2(200, 400)));
 
     // Add the player
     add(Player(position: Vector2(200, 100)));
+  }
+
+  void incrementScore() {
+    score++;
+    scoreText.text = 'Score: $score';
   }
 }
 
@@ -54,6 +73,33 @@ class Player extends PositionComponent
   @override
   void update(double dt) {
     position += velocity * dt;
+
+    // --- LEFT WALL ---
+    if (position.x < 0) {
+      position.x = 0;
+      // Optional: Make it bounce!
+      velocity.x = -velocity.x;
+    }
+
+    // --- RIGHT WALL ---
+    // gameRef.size.x is the width of the screen
+    // size.x is the width of the player (50)
+    if (position.x > gameRef.size.x - size.x) {
+      position.x = gameRef.size.x - size.x;
+      velocity.x = -velocity.x; // Bounce back
+    }
+
+    // --- CEILING (Top) ---
+    if (position.y < 0) {
+      position.y = 0;
+      velocity.y = -velocity.y; // Bounce down
+    }
+
+    // --- FLOOR (Bottom) ---
+    if (position.y > gameRef.size.y - size.y) {
+      position.y = gameRef.size.y - size.y;
+      velocity.y = -velocity.y; // Bounce back up
+    }
   }
 
   @override
@@ -72,7 +118,7 @@ class Player extends PositionComponent
       other.removeFromParent();
 
       // Access the score variable in the main game class
-      gameRef.score++;
+      gameRef.incrementScore();
       print("Score: ${gameRef.score}");
     }
   }
@@ -80,6 +126,6 @@ class Player extends PositionComponent
   @override
   void onTapDown(TapDownEvent event) {
     // Reverse horizontal direction
-    velocity.x *= -1;
+    velocity.y = -200;
   }
 }
