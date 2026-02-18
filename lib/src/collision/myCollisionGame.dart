@@ -77,7 +77,6 @@ class Player extends PositionComponent
     // --- LEFT WALL ---
     if (position.x < 0) {
       position.x = 0;
-      // Optional: Make it bounce!
       velocity.x = -velocity.x;
     }
 
