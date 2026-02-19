@@ -122,6 +122,7 @@ class Player extends PositionComponent
     }
   }
 
+  //make the player jump when the screen is tapped
   @override
   void onTapDown(TapDownEvent event) {
     // Reverse horizontal direction
